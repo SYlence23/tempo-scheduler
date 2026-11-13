@@ -56,7 +56,8 @@ if ($openssl -and -not (Test-Path -LiteralPath (Join-Path $script:TempoRuntime '
         if ($LASTEXITCODE -ne 0) { throw 'Could not generate local HTTPS certificate' }
     } finally { Pop-Location }
 }
-Start-TempoService 'balancer' $python @('-m','backend.python.balancer') @{ UPSTREAM_URLS='http://127.0.0.1:3101,http://127.0.0.1:3102'; BALANCER_HOST='127.0.0.1'; BALANCER_PORT=8088; BALANCER_HTTPS_PORT=8443 }
+$balancerHost = if ($env:BALANCER_HOST) { $env:BALANCER_HOST } else { '127.0.0.1' }
+Start-TempoService 'balancer' $python @('-m','backend.python.balancer') @{ UPSTREAM_URLS='http://127.0.0.1:3101,http://127.0.0.1:3102'; BALANCER_HOST=$balancerHost; BALANCER_PORT=8088; BALANCER_HTTPS_PORT=8443 }
 Wait-TempoHttp 'http://127.0.0.1:8088/api/health' | Out-Null
 Write-Host 'Tempo: http://localhost:8088'
 Write-Host 'Balancer and workers: Python. API: Node.js.'

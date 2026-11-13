@@ -1,4 +1,4 @@
-param(
+﻿param(
     [ValidateRange(1,6)][int]$Count = 6,
     [ValidateRange(1000,2000000)][int]$Iterations = 2000000,
     [ValidateRange(0,120)][int]$CancelAfterSeconds = 0,
@@ -6,7 +6,7 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-$sample = Get-Content -Raw -LiteralPath (Join-Path $root 'frontend\examples\load-test.json') | ConvertFrom-Json
+$sample = Get-Content -Raw -Encoding UTF8 -LiteralPath (Join-Path $root 'frontend\examples\load-test.json') | ConvertFrom-Json
 $submittedIds = [Collections.Generic.List[string]]::new()
 function Invoke-TempoRequest([string]$Method, [string]$Path, $Body, [string]$Token) {
     $arguments = @{ Method = $Method; Uri = ($BaseUrl.TrimEnd('/') + $Path); TimeoutSec = 10 }

@@ -40,7 +40,10 @@ function Test-TempoProcess($record) {
 
 function Get-TempoProcesses {
     $processPath = Join-Path $script:TempoRuntime 'processes.json'
-    if (Test-Path -LiteralPath $processPath) { return @(Get-Content -Raw -LiteralPath $processPath | ConvertFrom-Json) }
+    if (Test-Path -LiteralPath $processPath) {
+        $entries = Get-Content -Raw -LiteralPath $processPath | ConvertFrom-Json
+        foreach ($entry in $entries) { Write-Output $entry }
+    }
     return @()
 }
 
