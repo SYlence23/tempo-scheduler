@@ -45,8 +45,10 @@ test('Tempo: two APIs, authentication, real optimization, SSE, ownership, downlo
     assert.equal((await request('/api/admin/metrics',first.token)).response.status,403);
     const cyclic=makeInput();cyclic.tasks[0].dependencies=['t1'];
     assert.equal((await request('/api/jobs',first.token,{method:'POST',body:JSON.stringify(cyclic)})).response.status,400);
-    const created=await request('/api/jobs',first.token,{method:'POST',body:JSON.stringify(makeInput())});
+    const created=await request('/api/jobs',first.token,{method:'POST',body:JSON.stringify({...makeInput(),startTime:'09:30',timeDisplay:'clock'})});
     assert.equal(created.response.status,201);
+    assert.equal(created.data.job.input.startTime,'09:30');
+    assert.equal(created.data.job.input.timeDisplay,'clock');
     const id=created.data.job.id;
     assert.equal((await request(`/api/jobs/${id}`,second.token)).response.status,403);
     const stream=await fetch(`${base}/api/jobs/${id}/events?token=${encodeURIComponent(first.token)}`);

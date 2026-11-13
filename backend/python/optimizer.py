@@ -1,5 +1,6 @@
 import math
 import random
+import re
 import time
 
 def validate_input(raw):
@@ -70,7 +71,14 @@ def validate_input(raw):
         raise ValueError('Кількість ітерацій: від 1 000 до 2 000 000.')
     if not math.isfinite(seed) or not seed.is_integer() or abs(seed) > 9007199254740991:
         raise ValueError('Seed має бути цілим числом.')
-    return {'name': str(raw.get('name') or 'Новий розклад').strip()[:100], 'resources': normalized_resources, 'tasks': normalized_tasks, 'iterations': int(iterations), 'seed': int(seed)}
+    timing = {}
+    if 'startTime' in raw or 'timeDisplay' in raw:
+        timing = {'startTime': raw.get('startTime', '09:00'), 'timeDisplay': raw.get('timeDisplay', 'clock')}
+        if not isinstance(timing['startTime'], str) or not re.fullmatch(r'([01][0-9]|2[0-3]):[0-5][0-9]', timing['startTime']):
+            raise ValueError('Початок плану має бути у форматі ГГ:ХХ.')
+        if timing['timeDisplay'] not in ('clock', 'hours'):
+            raise ValueError('Невідомий формат часу.')
+    return {'name': str(raw.get('name') or 'Новий розклад').strip()[:100], 'resources': normalized_resources, 'tasks': normalized_tasks, 'iterations': int(iterations), 'seed': int(seed), **timing}
 
 def optimize(raw, on_progress=None, is_cancelled=None):
     data = validate_input(raw)

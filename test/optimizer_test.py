@@ -7,6 +7,19 @@ def fixture():
     return {'name': 'Sprint', 'resources': [{'id':'a','name':'Anna'},{'id':'b','name':'Bohdan'}], 'tasks': [{'id':'design','duration':3,'deadline':5,'dependencies':[],'eligibleResources':['a']},{'id':'api','duration':4,'deadline':6,'dependencies':[]},{'id':'ui','duration':2,'deadline':7,'dependencies':['design']},{'id':'qa','duration':2,'deadline':9,'dependencies':['api','ui']}], 'iterations':5000,'seed':21}
 
 class OptimizerTests(unittest.TestCase):
+    def test_clock_metadata_is_preserved_without_changing_optimization(self):
+        data = dict(fixture(), startTime='09:30', timeDisplay='clock')
+        normalized = validate_input(data)
+        self.assertEqual(normalized['startTime'], '09:30')
+        self.assertEqual(normalized['timeDisplay'], 'clock')
+        self.assertEqual(optimize(data)['optimized'], optimize(fixture())['optimized'])
+        self.assertNotIn('startTime', validate_input(fixture()))
+        for invalid in ('24:00', '12:60', '9:00', None):
+            with self.assertRaises(ValueError):
+                validate_input(dict(fixture(), startTime=invalid))
+        with self.assertRaises(ValueError):
+            validate_input(dict(fixture(), timeDisplay='calendar'))
+
     def test_validation_rejects_cycles_unknown_references_and_limits(self):
         data=fixture()
         data['tasks'][0]['dependencies']=['qa']

@@ -52,5 +52,12 @@ export function validateInput(raw) {
   if (!Number.isInteger(iterations) || iterations < 1000 || iterations > 2000000) throw new Error('Кількість ітерацій: від 1 000 до 2 000 000.');
   const seed = Number(raw.seed ?? 42);
   if (!Number.isSafeInteger(seed)) throw new Error('Seed має бути цілим числом.');
-  return { name: boundedText(raw.name, 'Новий розклад') || 'Новий розклад', resources, tasks, iterations, seed };
+  const timing = {};
+  if (raw.startTime !== undefined || raw.timeDisplay !== undefined) {
+    timing.startTime = raw.startTime === undefined ? '09:00' : raw.startTime;
+    timing.timeDisplay = raw.timeDisplay === undefined ? 'clock' : raw.timeDisplay;
+    if (typeof timing.startTime !== 'string' || !/^([01]\d|2[0-3]):[0-5]\d$/.test(timing.startTime)) throw new Error('Початок плану має бути у форматі ГГ:ХХ.');
+    if (!['clock', 'hours'].includes(timing.timeDisplay)) throw new Error('Невідомий формат часу.');
+  }
+  return { name: boundedText(raw.name, 'Новий розклад') || 'Новий розклад', resources, tasks, iterations, seed, ...timing };
 }
