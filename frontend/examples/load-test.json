@@ -1,0 +1,1197 @@
+{
+  "name": "Навантажувальний сценарій · 80 робіт",
+  "resources": [
+    {
+      "id": "R1",
+      "name": "Команда 1"
+    },
+    {
+      "id": "R2",
+      "name": "Команда 2"
+    },
+    {
+      "id": "R3",
+      "name": "Команда 3"
+    },
+    {
+      "id": "R4",
+      "name": "Команда 4"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T01",
+      "name": "Робота 01",
+      "duration": 8,
+      "deadline": 12.0,
+      "dependencies": [],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T02",
+      "name": "Робота 02",
+      "duration": 6,
+      "deadline": 12.0,
+      "dependencies": [],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T03",
+      "name": "Робота 03",
+      "duration": 4,
+      "deadline": 12.0,
+      "dependencies": [],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T04",
+      "name": "Робота 04",
+      "duration": 2,
+      "deadline": 12.0,
+      "dependencies": [],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T05",
+      "name": "Робота 05",
+      "duration": 9,
+      "deadline": 17.0,
+      "dependencies": [
+        "T01"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T06",
+      "name": "Робота 06",
+      "duration": 7,
+      "deadline": 17.0,
+      "dependencies": [
+        "T02"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T07",
+      "name": "Робота 07",
+      "duration": 5,
+      "deadline": 17.0,
+      "dependencies": [
+        "T03"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R3"
+      ]
+    },
+    {
+      "id": "T08",
+      "name": "Робота 08",
+      "duration": 3,
+      "deadline": 17.0,
+      "dependencies": [
+        "T04"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T09",
+      "name": "Робота 09",
+      "duration": 1,
+      "deadline": 22.0,
+      "dependencies": [
+        "T05"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T10",
+      "name": "Робота 10",
+      "duration": 8,
+      "deadline": 22.0,
+      "dependencies": [
+        "T06"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T11",
+      "name": "Робота 11",
+      "duration": 6,
+      "deadline": 22.0,
+      "dependencies": [
+        "T07"
+      ],
+      "eligibleResources": [
+        "R2",
+        "R4"
+      ]
+    },
+    {
+      "id": "T12",
+      "name": "Робота 12",
+      "duration": 4,
+      "deadline": 22.0,
+      "dependencies": [
+        "T08"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T13",
+      "name": "Робота 13",
+      "duration": 2,
+      "deadline": 27.0,
+      "dependencies": [
+        "T09"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T14",
+      "name": "Робота 14",
+      "duration": 9,
+      "deadline": 27.0,
+      "dependencies": [
+        "T10"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R3"
+      ]
+    },
+    {
+      "id": "T15",
+      "name": "Робота 15",
+      "duration": 7,
+      "deadline": 27.0,
+      "dependencies": [
+        "T11",
+        "T06"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T16",
+      "name": "Робота 16",
+      "duration": 5,
+      "deadline": 27.0,
+      "dependencies": [
+        "T12"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T17",
+      "name": "Робота 17",
+      "duration": 3,
+      "deadline": 32.0,
+      "dependencies": [
+        "T13"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T18",
+      "name": "Робота 18",
+      "duration": 1,
+      "deadline": 32.0,
+      "dependencies": [
+        "T14"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T19",
+      "name": "Робота 19",
+      "duration": 8,
+      "deadline": 32.0,
+      "dependencies": [
+        "T15"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T20",
+      "name": "Робота 20",
+      "duration": 6,
+      "deadline": 32.0,
+      "dependencies": [
+        "T16",
+        "T11"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T21",
+      "name": "Робота 21",
+      "duration": 4,
+      "deadline": 37.0,
+      "dependencies": [
+        "T17"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R3"
+      ]
+    },
+    {
+      "id": "T22",
+      "name": "Робота 22",
+      "duration": 2,
+      "deadline": 37.0,
+      "dependencies": [
+        "T18"
+      ],
+      "eligibleResources": [
+        "R2",
+        "R4"
+      ]
+    },
+    {
+      "id": "T23",
+      "name": "Робота 23",
+      "duration": 9,
+      "deadline": 37.0,
+      "dependencies": [
+        "T19"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T24",
+      "name": "Робота 24",
+      "duration": 7,
+      "deadline": 37.0,
+      "dependencies": [
+        "T20"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T25",
+      "name": "Робота 25",
+      "duration": 5,
+      "deadline": 42.0,
+      "dependencies": [
+        "T21",
+        "T16"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T26",
+      "name": "Робота 26",
+      "duration": 3,
+      "deadline": 42.0,
+      "dependencies": [
+        "T22"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T27",
+      "name": "Робота 27",
+      "duration": 1,
+      "deadline": 42.0,
+      "dependencies": [
+        "T23"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T28",
+      "name": "Робота 28",
+      "duration": 8,
+      "deadline": 42.0,
+      "dependencies": [
+        "T24"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R3"
+      ]
+    },
+    {
+      "id": "T29",
+      "name": "Робота 29",
+      "duration": 6,
+      "deadline": 47.0,
+      "dependencies": [
+        "T25"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T30",
+      "name": "Робота 30",
+      "duration": 4,
+      "deadline": 47.0,
+      "dependencies": [
+        "T26",
+        "T21"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T31",
+      "name": "Робота 31",
+      "duration": 2,
+      "deadline": 47.0,
+      "dependencies": [
+        "T27"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T32",
+      "name": "Робота 32",
+      "duration": 9,
+      "deadline": 47.0,
+      "dependencies": [
+        "T28"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T33",
+      "name": "Робота 33",
+      "duration": 7,
+      "deadline": 52.0,
+      "dependencies": [
+        "T29"
+      ],
+      "eligibleResources": [
+        "R2",
+        "R4"
+      ]
+    },
+    {
+      "id": "T34",
+      "name": "Робота 34",
+      "duration": 5,
+      "deadline": 52.0,
+      "dependencies": [
+        "T30"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T35",
+      "name": "Робота 35",
+      "duration": 3,
+      "deadline": 52.0,
+      "dependencies": [
+        "T31",
+        "T26"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R3"
+      ]
+    },
+    {
+      "id": "T36",
+      "name": "Робота 36",
+      "duration": 1,
+      "deadline": 52.0,
+      "dependencies": [
+        "T32"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T37",
+      "name": "Робота 37",
+      "duration": 8,
+      "deadline": 57.0,
+      "dependencies": [
+        "T33"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T38",
+      "name": "Робота 38",
+      "duration": 6,
+      "deadline": 57.0,
+      "dependencies": [
+        "T34"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T39",
+      "name": "Робота 39",
+      "duration": 4,
+      "deadline": 57.0,
+      "dependencies": [
+        "T35"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T40",
+      "name": "Робота 40",
+      "duration": 2,
+      "deadline": 57.0,
+      "dependencies": [
+        "T36",
+        "T31"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T41",
+      "name": "Робота 41",
+      "duration": 9,
+      "deadline": 62.0,
+      "dependencies": [
+        "T37"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T42",
+      "name": "Робота 42",
+      "duration": 7,
+      "deadline": 62.0,
+      "dependencies": [
+        "T38"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R3"
+      ]
+    },
+    {
+      "id": "T43",
+      "name": "Робота 43",
+      "duration": 5,
+      "deadline": 62.0,
+      "dependencies": [
+        "T39"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T44",
+      "name": "Робота 44",
+      "duration": 3,
+      "deadline": 62.0,
+      "dependencies": [
+        "T40"
+      ],
+      "eligibleResources": [
+        "R2",
+        "R4"
+      ]
+    },
+    {
+      "id": "T45",
+      "name": "Робота 45",
+      "duration": 1,
+      "deadline": 67.0,
+      "dependencies": [
+        "T41",
+        "T36"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T46",
+      "name": "Робота 46",
+      "duration": 8,
+      "deadline": 67.0,
+      "dependencies": [
+        "T42"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T47",
+      "name": "Робота 47",
+      "duration": 6,
+      "deadline": 67.0,
+      "dependencies": [
+        "T43"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T48",
+      "name": "Робота 48",
+      "duration": 4,
+      "deadline": 67.0,
+      "dependencies": [
+        "T44"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T49",
+      "name": "Робота 49",
+      "duration": 2,
+      "deadline": 72.0,
+      "dependencies": [
+        "T45"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R3"
+      ]
+    },
+    {
+      "id": "T50",
+      "name": "Робота 50",
+      "duration": 9,
+      "deadline": 72.0,
+      "dependencies": [
+        "T46",
+        "T41"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T51",
+      "name": "Робота 51",
+      "duration": 7,
+      "deadline": 72.0,
+      "dependencies": [
+        "T47"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T52",
+      "name": "Робота 52",
+      "duration": 5,
+      "deadline": 72.0,
+      "dependencies": [
+        "T48"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T53",
+      "name": "Робота 53",
+      "duration": 3,
+      "deadline": 77.0,
+      "dependencies": [
+        "T49"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T54",
+      "name": "Робота 54",
+      "duration": 1,
+      "deadline": 77.0,
+      "dependencies": [
+        "T50"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T55",
+      "name": "Робота 55",
+      "duration": 8,
+      "deadline": 77.0,
+      "dependencies": [
+        "T51",
+        "T46"
+      ],
+      "eligibleResources": [
+        "R2",
+        "R4"
+      ]
+    },
+    {
+      "id": "T56",
+      "name": "Робота 56",
+      "duration": 6,
+      "deadline": 77.0,
+      "dependencies": [
+        "T52"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R3"
+      ]
+    },
+    {
+      "id": "T57",
+      "name": "Робота 57",
+      "duration": 4,
+      "deadline": 82.0,
+      "dependencies": [
+        "T53"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T58",
+      "name": "Робота 58",
+      "duration": 2,
+      "deadline": 82.0,
+      "dependencies": [
+        "T54"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T59",
+      "name": "Робота 59",
+      "duration": 9,
+      "deadline": 82.0,
+      "dependencies": [
+        "T55"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T60",
+      "name": "Робота 60",
+      "duration": 7,
+      "deadline": 82.0,
+      "dependencies": [
+        "T56",
+        "T51"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T61",
+      "name": "Робота 61",
+      "duration": 5,
+      "deadline": 87.0,
+      "dependencies": [
+        "T57"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T62",
+      "name": "Робота 62",
+      "duration": 3,
+      "deadline": 87.0,
+      "dependencies": [
+        "T58"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T63",
+      "name": "Робота 63",
+      "duration": 1,
+      "deadline": 87.0,
+      "dependencies": [
+        "T59"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R3"
+      ]
+    },
+    {
+      "id": "T64",
+      "name": "Робота 64",
+      "duration": 8,
+      "deadline": 87.0,
+      "dependencies": [
+        "T60"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T65",
+      "name": "Робота 65",
+      "duration": 6,
+      "deadline": 92.0,
+      "dependencies": [
+        "T61",
+        "T56"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T66",
+      "name": "Робота 66",
+      "duration": 4,
+      "deadline": 92.0,
+      "dependencies": [
+        "T62"
+      ],
+      "eligibleResources": [
+        "R2",
+        "R4"
+      ]
+    },
+    {
+      "id": "T67",
+      "name": "Робота 67",
+      "duration": 2,
+      "deadline": 92.0,
+      "dependencies": [
+        "T63"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T68",
+      "name": "Робота 68",
+      "duration": 9,
+      "deadline": 92.0,
+      "dependencies": [
+        "T64"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T69",
+      "name": "Робота 69",
+      "duration": 7,
+      "deadline": 97.0,
+      "dependencies": [
+        "T65"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T70",
+      "name": "Робота 70",
+      "duration": 5,
+      "deadline": 97.0,
+      "dependencies": [
+        "T66",
+        "T61"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R3"
+      ]
+    },
+    {
+      "id": "T71",
+      "name": "Робота 71",
+      "duration": 3,
+      "deadline": 97.0,
+      "dependencies": [
+        "T67"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T72",
+      "name": "Робота 72",
+      "duration": 1,
+      "deadline": 97.0,
+      "dependencies": [
+        "T68"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T73",
+      "name": "Робота 73",
+      "duration": 8,
+      "deadline": 102.0,
+      "dependencies": [
+        "T69"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T74",
+      "name": "Робота 74",
+      "duration": 6,
+      "deadline": 102.0,
+      "dependencies": [
+        "T70"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T75",
+      "name": "Робота 75",
+      "duration": 4,
+      "deadline": 102.0,
+      "dependencies": [
+        "T71",
+        "T66"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T76",
+      "name": "Робота 76",
+      "duration": 2,
+      "deadline": 102.0,
+      "dependencies": [
+        "T72"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T77",
+      "name": "Робота 77",
+      "duration": 9,
+      "deadline": 107.0,
+      "dependencies": [
+        "T73"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R3"
+      ]
+    },
+    {
+      "id": "T78",
+      "name": "Робота 78",
+      "duration": 7,
+      "deadline": 107.0,
+      "dependencies": [
+        "T74"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T79",
+      "name": "Робота 79",
+      "duration": 5,
+      "deadline": 107.0,
+      "dependencies": [
+        "T75"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    },
+    {
+      "id": "T80",
+      "name": "Робота 80",
+      "duration": 3,
+      "deadline": 107.0,
+      "dependencies": [
+        "T76",
+        "T71"
+      ],
+      "eligibleResources": [
+        "R1",
+        "R2",
+        "R3",
+        "R4"
+      ]
+    }
+  ],
+  "iterations": 2000000,
+  "seed": 42
+}
