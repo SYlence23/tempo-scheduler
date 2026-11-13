@@ -2,8 +2,8 @@ FROM node:22-alpine
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci --omit=dev
-COPY server ./server
-COPY public ./public
+COPY backend ./backend
+COPY frontend ./frontend
 ENV HOST=0.0.0.0
 EXPOSE 3000
-CMD ["node","server/index.mjs"]
+CMD ["node","backend/index.mjs"]

@@ -21,7 +21,7 @@ test('a real worker hard-stops CPU work after one second and processes the next 
     const url = new URL(process.env.TEST_DATABASE_URL);
     url.searchParams.set('options', `-c search_path=${schema}`);
     scoped = new Pool({ connectionString: url.href });
-    await scoped.query(await readFile(new URL('../server/schema.sql', import.meta.url), 'utf8'));
+    await scoped.query(await readFile(new URL('../backend/schema.sql', import.meta.url), 'utf8'));
     await scoped.query("INSERT INTO users(id,name,email,password_hash) VALUES($1,'Timeout test',$2,'not-used')", [userId, `${userId}@timeout.local`]);
     const input = {
       name: 'Hard timeout test',
@@ -30,7 +30,7 @@ test('a real worker hard-stops CPU work after one second and processes the next 
       iterations: 2000000, seed: 42,
     };
     await scoped.query('INSERT INTO jobs(id,user_id,name,input) VALUES($1,$2,$3,$4::jsonb)', [id, userId, input.name, JSON.stringify(input)]);
-    child = spawn(process.execPath, [fileURLToPath(new URL('../server/worker.mjs', import.meta.url))], {
+    child = spawn(process.execPath, [fileURLToPath(new URL('../backend/worker.mjs', import.meta.url))], {
       cwd: fileURLToPath(new URL('../', import.meta.url)),
       env: { ...process.env, DATABASE_URL: url.href, TASK_TIMEOUT_SECONDS: '1', WORKER_ID: `TIMEOUT_${userId}`, WORKER_SLOT: '1' },
       stdio: ['ignore', 'pipe', 'pipe', 'ipc'], windowsHide: true, shell: false,

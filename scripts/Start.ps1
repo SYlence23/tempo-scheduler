@@ -22,7 +22,7 @@ try {
 } finally { if ($null -eq $previousPassword) { Remove-Item Env:\PGPASSWORD -ErrorAction SilentlyContinue } else { $env:PGPASSWORD = $previousPassword } }
 Push-Location $script:TempoRoot
 try {
-    & (Join-Path $paths.nodeDir 'node.exe') 'server/initialize.mjs'
+    & (Join-Path $paths.nodeDir 'node.exe') 'backend/initialize.mjs'
     if ($LASTEXITCODE -ne 0) { throw 'Database schema initialization failed' }
 } finally { Pop-Location }
 $stopRequest = Join-Path $script:TempoRuntime 'stop.request'
@@ -41,12 +41,12 @@ function Start-TempoNode([string]$name, [string]$entrypoint, [hashtable]$variabl
         $records | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $script:TempoRuntime 'processes.json') -Encoding UTF8
     } finally { foreach ($key in $variables.Keys) { if ($null -eq $savedVariables[$key]) { Remove-Item -LiteralPath ('Env:\' + $key) -ErrorAction SilentlyContinue } else { [Environment]::SetEnvironmentVariable($key, $savedVariables[$key], 'Process') } } }
 }
-Start-TempoNode 'api1' 'server/index.mjs' @{ PORT = 3101; SERVER_ID = 'API_1'; HOST = '127.0.0.1' }
-Start-TempoNode 'api2' 'server/index.mjs' @{ PORT = 3102; SERVER_ID = 'API_2'; HOST = '127.0.0.1' }
-Start-TempoNode 'worker1' 'server/worker.mjs' @{ WORKER_ID = 'WORKER_1'; WORKER_SLOT = 1 }
-Start-TempoNode 'worker2' 'server/worker.mjs' @{ WORKER_ID = 'WORKER_2'; WORKER_SLOT = 2 }
-Start-TempoNode 'autoscaler' 'server/autoscaler.mjs' @{}
-Start-TempoNode 'supervisor' 'server/supervisor.mjs' @{}
+Start-TempoNode 'api1' 'backend/index.mjs' @{ PORT = 3101; SERVER_ID = 'API_1'; HOST = '127.0.0.1' }
+Start-TempoNode 'api2' 'backend/index.mjs' @{ PORT = 3102; SERVER_ID = 'API_2'; HOST = '127.0.0.1' }
+Start-TempoNode 'worker1' 'backend/worker.mjs' @{ WORKER_ID = 'WORKER_1'; WORKER_SLOT = 1 }
+Start-TempoNode 'worker2' 'backend/worker.mjs' @{ WORKER_ID = 'WORKER_2'; WORKER_SLOT = 2 }
+Start-TempoNode 'autoscaler' 'backend/autoscaler.mjs' @{}
+Start-TempoNode 'supervisor' 'backend/supervisor.mjs' @{}
 Wait-TempoHttp 'http://127.0.0.1:3101/api/health' | Out-Null
 Wait-TempoHttp 'http://127.0.0.1:3102/api/health' | Out-Null
 $openssl = @('C:\Program Files\Git\usr\bin\openssl.exe', 'C:\Program Files\Git\mingw64\bin\openssl.exe') | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1

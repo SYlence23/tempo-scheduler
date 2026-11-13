@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { setTimeout as sleep } from 'node:timers/promises';
-import { pool, query } from '../server/db.mjs';
+import { pool, query } from '../backend/db.mjs';
 
 const base = process.env.TEMPO_TEST_URL || 'http://127.0.0.1:8088';
 const password = 'TempoTest2026!';

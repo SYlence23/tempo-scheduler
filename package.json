@@ -6,10 +6,10 @@
   "description": "Dependency-aware schedule optimization with a PostgreSQL job queue and Nginx load balancing",
   "engines": { "node": ">=22" },
   "scripts": {
-    "start": "node server/index.mjs",
-    "worker": "node server/worker.mjs",
-    "autoscaler": "node server/autoscaler.mjs",
-    "db:init": "node server/initialize.mjs",
+    "start": "node backend/index.mjs",
+    "worker": "node backend/worker.mjs",
+    "autoscaler": "node backend/autoscaler.mjs",
+    "db:init": "node backend/initialize.mjs",
     "test": "node --test test/*.test.mjs",
     "test:integration": "node --test test/integration.mjs",
     "check": "node scripts/check.mjs"

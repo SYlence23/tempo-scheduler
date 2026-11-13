@@ -1,6 +1,6 @@
 # Архітектура Tempo
 
-Відкрийте http://localhost:8088/architecture.html для схеми, пояснень та друку. Векторний рисунок: `public/assets/architecture.svg`.
+Відкрийте http://localhost:8088/architecture.html для схеми, пояснень та друку. Векторний рисунок: `frontend/assets/architecture.svg`.
 
 ```mermaid
 flowchart TB

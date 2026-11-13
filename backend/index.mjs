@@ -179,9 +179,9 @@ app.get('/api/admin/metrics', requireAuth, requireAdmin, route(async (req, res) 
   res.json({ queue, nodes, averageSeconds: Math.round((average[0].duration || 0) / 100) / 10, desiredWorkers: Number(desired[0]?.value || 2), limits });
 }));
 
-app.use(express.static(fileURLToPath(new URL('../public', import.meta.url)), { index: 'index.html' }));
+app.use(express.static(fileURLToPath(new URL('../frontend', import.meta.url)), { index: 'index.html' }));
 app.use('/api', (req, res) => res.status(404).json({ error: 'Маршрут не знайдено.' }));
-app.get(['/', '/history', '/admin'], (req, res) => res.sendFile(fileURLToPath(new URL('../public/index.html', import.meta.url))));
+app.get(['/', '/history', '/admin'], (req, res) => res.sendFile(fileURLToPath(new URL('../frontend/index.html', import.meta.url))));
 app.use((error, req, res, next) => {
   if (res.headersSent) return next(error);
   if (error.type === 'entity.too.large') return res.status(413).json({ error: 'Надто великий запит.' });

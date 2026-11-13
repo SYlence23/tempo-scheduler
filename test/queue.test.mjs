@@ -4,7 +4,7 @@ import test from 'node:test';
 
 test('PostgreSQL atomically assigns every queued job once and skips cancelled work', { skip: !process.env.TEST_DATABASE_URL }, async () => {
   const { Pool } = await import('pg');
-  const { claimNextJob } = await import('../server/worker.mjs');
+  const { claimNextJob } = await import('../backend/worker.mjs');
   const schema = `tempo_queue_test_${randomUUID().replaceAll('-', '')}`;
   const admin = new Pool({ connectionString: process.env.TEST_DATABASE_URL });
   let scoped;

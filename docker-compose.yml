@@ -48,35 +48,35 @@ services:
       retries: 20
   worker1:
     <<: *app
-    command: ["node","server/worker.mjs"]
+    command: ["node","backend/worker.mjs"]
     environment:
       <<: *env
       WORKER_ID: WORKER_1
       WORKER_SLOT: 1
   worker2:
     <<: *app
-    command: ["node","server/worker.mjs"]
+    command: ["node","backend/worker.mjs"]
     environment:
       <<: *env
       WORKER_ID: WORKER_2
       WORKER_SLOT: 2
   worker3:
     <<: *app
-    command: ["node","server/worker.mjs"]
+    command: ["node","backend/worker.mjs"]
     environment:
       <<: *env
       WORKER_ID: WORKER_3
       WORKER_SLOT: 3
   worker4:
     <<: *app
-    command: ["node","server/worker.mjs"]
+    command: ["node","backend/worker.mjs"]
     environment:
       <<: *env
       WORKER_ID: WORKER_4
       WORKER_SLOT: 4
   autoscaler:
     <<: *app
-    command: ["node","server/autoscaler.mjs"]
+    command: ["node","backend/autoscaler.mjs"]
   nginx:
     image: nginx:1.30-alpine
     restart: unless-stopped

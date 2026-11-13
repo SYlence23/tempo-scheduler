@@ -6,7 +6,7 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $root = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
-$sample = Get-Content -Raw -LiteralPath (Join-Path $root 'public\examples\load-test.json') | ConvertFrom-Json
+$sample = Get-Content -Raw -LiteralPath (Join-Path $root 'frontend\examples\load-test.json') | ConvertFrom-Json
 $submittedIds = [Collections.Generic.List[string]]::new()
 function Invoke-TempoRequest([string]$Method, [string]$Path, $Body, [string]$Token) {
     $arguments = @{ Method = $Method; Uri = ($BaseUrl.TrimEnd('/') + $Path); TimeoutSec = 10 }

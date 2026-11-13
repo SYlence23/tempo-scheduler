@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { optimize, validateInput } from '../server/optimizer.mjs';
+import { optimize, validateInput } from '../backend/optimizer.mjs';
 
 const fixture = () => ({
   name: 'Спринт', resources: [{ id: 'a', name: 'Анна' }, { id: 'b', name: 'Богдан' }],

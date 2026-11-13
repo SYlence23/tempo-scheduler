@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { canStopIdleWorker, normalizeDesiredWorkers } from '../server/supervisor.mjs';
+import { canStopIdleWorker, normalizeDesiredWorkers } from '../backend/supervisor.mjs';
 
 test('supervisor only permits bounded standby capacity', () => {
   assert.equal(normalizeDesiredWorkers(undefined), 2);
