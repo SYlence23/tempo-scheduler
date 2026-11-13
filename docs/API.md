@@ -1,6 +1,8 @@
 # HTTP API Tempo
 
-API використовує JSON. Помилка має вигляд `{ "error": "Пояснення" }`. Авторизація: `Authorization: Bearer <token>`. Для SSE та завантаження інтерфейс може передавати токен у параметрі `?token=`. Nginx пише в access log лише шлях без query string.
+API залишається на Node.js та Express і використовує JSON. Помилка має вигляд `{ "error": "Пояснення" }`. Авторизація: `Authorization: Bearer <token>`. Для SSE та завантаження інтерфейс може передавати токен у параметрі `?token=`. Python-балансер записує в журнал лише шлях без query string.
+
+На спільному вході `GET /balancer/status` повертає алгоритм `least_conn`, активні з’єднання й лічильники запитів до кожного API. Заголовок `X-Balancer: Python-least_conn` показує реалізацію балансера, `X-Served-By` — API, що обробив запит.
 
 ## Маршрути
 

@@ -11,10 +11,30 @@ if (-not (Test-Path -LiteralPath (Join-Path $paths.nodeDir 'node.exe'))) {
     if ((Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash -ne $expected) { throw 'Node.js checksum mismatch' }
     Expand-Archive -LiteralPath $archive -DestinationPath $script:TempoTools -Force
 }
-if (-not (Test-Path -LiteralPath (Join-Path $paths.nginxDir 'nginx.exe'))) {
-    $archive = Join-Path $script:TempoTools 'nginx.zip'
-    Invoke-WebRequest -Uri 'https://nginx.org/download/nginx-1.30.6.zip' -OutFile $archive
-    Expand-Archive -LiteralPath $archive -DestinationPath $script:TempoTools -Force
+if (-not (Test-Path -LiteralPath $paths.pythonExe)) {
+    $archive = Join-Path $script:TempoTools 'python-3.13.9-embed-amd64.zip'
+    Invoke-WebRequest -Uri 'https://www.python.org/ftp/python/3.13.9/python-3.13.9-embed-amd64.zip' -OutFile $archive
+    if ((Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash -ne '91D828C2DA3A029B41699E918674A0CB379C02CF20DAB9C501306885F837402A') { throw 'Python checksum mismatch' }
+    Expand-Archive -LiteralPath $archive -DestinationPath ([IO.Path]::GetDirectoryName($paths.pythonExe)) -Force
+}
+$pythonDirectory = [IO.Path]::GetDirectoryName($paths.pythonExe)
+New-Item -ItemType Directory -Force -Path (Join-Path $pythonDirectory 'Lib\site-packages') | Out-Null
+[IO.File]::WriteAllText((Join-Path $pythonDirectory 'python313._pth'), "python313.zip`n.`nLib/site-packages`n$script:TempoRoot`nimport site`n", [Text.UTF8Encoding]::new($false))
+$env:PYTHONUTF8 = '1'
+$env:PYTHONUNBUFFERED = '1'
+if (-not (Test-Path -LiteralPath (Join-Path $pythonDirectory 'Lib\site-packages\pip\__init__.py'))) {
+    $bootstrap = Join-Path $script:TempoTools 'get-pip.py'
+    Invoke-WebRequest -Uri 'https://bootstrap.pypa.io/get-pip.py' -OutFile $bootstrap
+    & $paths.pythonExe $bootstrap --disable-pip-version-check --no-warn-script-location
+    if ($LASTEXITCODE -ne 0) { throw 'pip bootstrap failed' }
+}
+$requirementsPath = Join-Path $script:TempoRoot 'requirements.txt'
+$requirementsHash = (Get-FileHash -LiteralPath $requirementsPath -Algorithm SHA256).Hash
+$requirementsMarker = Join-Path $script:TempoRuntime 'python-requirements.sha256'
+if (-not (Test-Path -LiteralPath $requirementsMarker) -or (Get-Content -Raw -LiteralPath $requirementsMarker).Trim() -ne $requirementsHash) {
+    & $paths.pythonExe -m pip install --disable-pip-version-check --no-warn-script-location -r $requirementsPath
+    if ($LASTEXITCODE -ne 0) { throw 'Python dependencies installation failed' }
+    Set-Content -LiteralPath $requirementsMarker -Value $requirementsHash
 }
 if (-not (Test-Path -LiteralPath (Join-Path $paths.postgresBin 'initdb.exe'))) { throw 'PostgreSQL binaries not found. Install PostgreSQL or use -PostgresBin C:\path\to\pgsql\bin. Docker Compose is an alternative.' }
 $paths | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $script:TempoRuntime 'tool-paths.json') -Encoding UTF8

@@ -5,7 +5,7 @@ import { config, limits } from './config.mjs';
 import { pool, query, initializeDatabase } from './db.mjs';
 import { hashPassword, verifyPassword, createToken, requireAuth, requireAdmin } from './auth.mjs';
 import { seedDemo } from './initialize.mjs';
-import { validateInput } from './optimizer.mjs';
+import { validateInput } from './validation.mjs';
 
 const app = express();
 app.disable('x-powered-by');

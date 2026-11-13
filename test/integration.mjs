@@ -27,6 +27,7 @@ test('Tempo: two APIs, authentication, real optimization, SSE, ownership, downlo
       assert.equal(data.database,'connected');
       servers.add(response.headers.get('x-served-by'));
       assert.ok(response.headers.get('x-handled-by'));
+      assert.equal(response.headers.get('x-balancer'),'Python-least_conn');
     }
     assert.deepEqual([...servers].sort(),['API_1','API_2']);
     const register = async () => {
@@ -69,6 +70,7 @@ test('Tempo: two APIs, authentication, real optimization, SSE, ownership, downlo
     }
     assert.equal(complete.status,'completed',complete.error);
     assert.equal(complete.progress,100);
+    assert.match(complete.result.algorithm,/Python/);
     assert.ok(complete.worker_id);
     assert.ok(complete.result.optimized.score<=complete.result.baseline.score+0.001);
     const schedule=complete.result.optimized.schedule;
@@ -102,7 +104,7 @@ test('Tempo: two APIs, authentication, real optimization, SSE, ownership, downlo
     assert.equal(metrics.response.status,200);
     assert.ok(metrics.data.nodes.filter(node=>node.kind==='api').length>=2);
     assert.ok(metrics.data.nodes.filter(node=>node.kind==='worker').length>=2);
-    console.log('Verified: API_1+API_2 via Nginx; SQL persistence; real CPU result; SSE; ownership; hard active-job limit; cancellations; admin metrics.');
+    console.log('Verified: API_1+API_2 via Python least_conn; Python CPU optimizer; SQL queue; SSE; ownership; active-job limit; cancellation; admin metrics.');
   } finally {
     for(const id of createdUsers) {
       await query("UPDATE jobs SET status='cancelled',cancel_requested=true WHERE user_id=$1 AND status IN ('queued','running')",[id]);

@@ -5,5 +5,6 @@ $pgReady = & (Join-Path $paths.postgresBin 'pg_isready.exe') -h 127.0.0.1 -p 554
 Write-Host $pgReady
 try {
     $health = Invoke-RestMethod -Uri 'http://127.0.0.1:8088/api/health' -TimeoutSec 3
-    Write-Host "Nginx -> $($health.server): $($health.status), PostgreSQL: $($health.database)"
-} catch { Write-Host 'Nginx/API is not available on localhost:8088' }
+    Write-Host "Python balancer -> $($health.server): $($health.status), PostgreSQL: $($health.database)"
+    Invoke-RestMethod -Uri 'http://127.0.0.1:8088/balancer/status' -TimeoutSec 3 | ConvertTo-Json -Depth 4
+} catch { Write-Host 'Python balancer/API is not available on localhost:8088' }

@@ -4,3 +4,5 @@ tools
 .git
 .env
 *.zip
+__pycache__
+*.pyc

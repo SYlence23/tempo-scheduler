@@ -1,12 +1,26 @@
-x-app: &app
+x-api: &api
   build: .
   restart: unless-stopped
-  environment: &env
+  environment: &environment
     DATABASE_URL: postgresql://tempo:${POSTGRES_PASSWORD:-tempo_local_demo}@db:5432/tempo
     JWT_SECRET: ${JWT_SECRET:-tempo_local_docker_secret_change_before_external_use_2026}
     SEED_DEMO: ${SEED_DEMO:-true}
     HOST: 0.0.0.0
     PORT: 3000
+  depends_on:
+    db:
+      condition: service_healthy
+
+x-python: &python
+  build:
+    context: .
+    dockerfile: backend/python/Dockerfile
+  restart: unless-stopped
+  environment: &python-environment
+    DATABASE_URL: postgresql://tempo:${POSTGRES_PASSWORD:-tempo_local_demo}@db:5432/tempo
+    TASK_TIMEOUT_SECONDS: ${TASK_TIMEOUT_SECONDS:-120}
+    PYTHONUTF8: 1
+    PYTHONUNBUFFERED: 1
   depends_on:
     db:
       condition: service_healthy
@@ -27,9 +41,9 @@ services:
       timeout: 3s
       retries: 20
   api1:
-    <<: *app
+    <<: *api
     environment:
-      <<: *env
+      <<: *environment
       SERVER_ID: API_1
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
@@ -37,9 +51,9 @@ services:
       timeout: 5s
       retries: 20
   api2:
-    <<: *app
+    <<: *api
     environment:
-      <<: *env
+      <<: *environment
       SERVER_ID: API_2
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
@@ -47,48 +61,47 @@ services:
       timeout: 5s
       retries: 20
   worker1:
-    <<: *app
-    command: ["node","backend/worker.mjs"]
+    <<: *python
     environment:
-      <<: *env
+      <<: *python-environment
       WORKER_ID: WORKER_1
       WORKER_SLOT: 1
   worker2:
-    <<: *app
-    command: ["node","backend/worker.mjs"]
+    <<: *python
     environment:
-      <<: *env
+      <<: *python-environment
       WORKER_ID: WORKER_2
       WORKER_SLOT: 2
   worker3:
-    <<: *app
-    command: ["node","backend/worker.mjs"]
+    <<: *python
     environment:
-      <<: *env
+      <<: *python-environment
       WORKER_ID: WORKER_3
       WORKER_SLOT: 3
   worker4:
-    <<: *app
-    command: ["node","backend/worker.mjs"]
+    <<: *python
     environment:
-      <<: *env
+      <<: *python-environment
       WORKER_ID: WORKER_4
       WORKER_SLOT: 4
   autoscaler:
-    <<: *app
-    command: ["node","backend/autoscaler.mjs"]
-  nginx:
-    image: nginx:1.30-alpine
-    restart: unless-stopped
+    <<: *python
+    command: ["python","-m","backend.python.autoscaler"]
+  balancer:
+    <<: *python
+    command: ["python","-m","backend.python.balancer"]
+    environment:
+      <<: *python-environment
+      UPSTREAM_URLS: http://api1:3000,http://api2:3000
+      BALANCER_HOST: 0.0.0.0
+      BALANCER_PORT: 8088
+      BALANCER_HTTPS_PORT: 0
     ports:
-      - "8088:80"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - "8088:8088"
     depends_on:
       api1:
         condition: service_healthy
       api2:
         condition: service_healthy
-
 volumes:
   postgres_data:

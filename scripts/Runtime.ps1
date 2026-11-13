@@ -7,13 +7,13 @@ function Get-TempoPaths {
     $savedPath = Join-Path $script:TempoRuntime 'tool-paths.json'
     if (Test-Path -LiteralPath $savedPath) {
         $saved = Get-Content -Raw -LiteralPath $savedPath | ConvertFrom-Json
-        if ((Test-Path -LiteralPath (Join-Path $saved.nodeDir 'node.exe')) -and (Test-Path -LiteralPath (Join-Path $saved.postgresBin 'pg_ctl.exe')) -and (Test-Path -LiteralPath (Join-Path $saved.nginxDir 'nginx.exe'))) { return $saved }
+        if ($saved.pythonExe -and (Test-Path -LiteralPath (Join-Path $saved.nodeDir 'node.exe')) -and (Test-Path -LiteralPath (Join-Path $saved.postgresBin 'pg_ctl.exe')) -and (Test-Path -LiteralPath $saved.pythonExe)) { return $saved }
     }
     $nodeDir = Join-Path $script:TempoTools 'node-v22.23.5-win-x64'
-    $nginxDir = Join-Path $script:TempoTools 'nginx-1.30.6'
+    $pythonExe = Join-Path $script:TempoTools 'python\python.exe'
     $pgCandidate = Get-ChildItem -Path (Join-Path $env:ProgramFiles 'PostgreSQL\*\bin\pg_ctl.exe') -ErrorAction SilentlyContinue | Sort-Object FullName -Descending | Select-Object -First 1
     $postgresBin = if ($env:TEMPO_POSTGRES_BIN) { $env:TEMPO_POSTGRES_BIN } elseif ($pgCandidate) { $pgCandidate.DirectoryName } else { Join-Path $script:TempoTools 'pgsql\bin' }
-    return [pscustomobject]@{ nodeDir = $nodeDir; nginxDir = $nginxDir; postgresBin = $postgresBin }
+    return [pscustomobject]@{ nodeDir = $nodeDir; pythonExe = $pythonExe; postgresBin = $postgresBin }
 }
 
 function Import-TempoEnvironment {
@@ -26,6 +26,9 @@ function Import-TempoEnvironment {
         }
     }
     $env:PATH = (Get-TempoPaths).nodeDir + ';' + $env:PATH
+    $env:PATH = [IO.Path]::GetDirectoryName((Get-TempoPaths).pythonExe) + ';' + $env:PATH
+    $env:PYTHONUTF8 = '1'
+    $env:PYTHONUNBUFFERED = '1'
 }
 
 function Test-TempoProcess($record) {

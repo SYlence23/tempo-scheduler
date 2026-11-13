@@ -1,9 +1,10 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { resolve, extname } from 'node:path';
+import { pythonExecutable } from './python.mjs';
 
 const root = resolve(import.meta.dirname, '..');
-const ignored = new Set(['node_modules','tools','.runtime','.git']);
+const ignored = new Set(['node_modules','tools','.runtime','.git','__pycache__']);
 const sourceExtensions = new Set(['.js','.mjs','.css','.html','.sql','.yml','.ps1','.conf']);
 let count = 0;
 async function inspect(directory) {
@@ -27,3 +28,6 @@ async function inspect(directory) {
 }
 await inspect(root);
 console.log(`Verified ${count} source files: valid JavaScript syntax, no source comments.`);
+const pythonCheck=spawnSync(pythonExecutable(),[resolve(root,'scripts/check_python.py')],{cwd:root,encoding:'utf8',windowsHide:true,env:{...process.env,PYTHONUTF8:'1'}});
+if(pythonCheck.status!==0)throw new Error(pythonCheck.stderr||'Python is required. Run scripts/Provision.ps1.');
+process.stdout.write(pythonCheck.stdout);
