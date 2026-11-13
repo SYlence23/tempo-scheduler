@@ -1,0 +1,22 @@
+{
+  "name": "tempo-scheduler",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Dependency-aware schedule optimization with a PostgreSQL job queue and Nginx load balancing",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node server/index.mjs",
+    "worker": "node server/worker.mjs",
+    "autoscaler": "node server/autoscaler.mjs",
+    "db:init": "node server/initialize.mjs",
+    "test": "node --test test/*.test.mjs",
+    "test:integration": "node --test test/integration.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "dependencies": {
+    "dotenv": "16.6.1",
+    "express": "4.21.2",
+    "pg": "8.16.3"
+  }
+}

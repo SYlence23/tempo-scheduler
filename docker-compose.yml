@@ -1,0 +1,94 @@
+x-app: &app
+  build: .
+  restart: unless-stopped
+  environment: &env
+    DATABASE_URL: postgresql://tempo:${POSTGRES_PASSWORD:-tempo_local_demo}@db:5432/tempo
+    JWT_SECRET: ${JWT_SECRET:-tempo_local_docker_secret_change_before_external_use_2026}
+    SEED_DEMO: ${SEED_DEMO:-true}
+    HOST: 0.0.0.0
+    PORT: 3000
+  depends_on:
+    db:
+      condition: service_healthy
+
+services:
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: tempo
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-tempo_local_demo}
+      POSTGRES_DB: tempo
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tempo -d tempo"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  api1:
+    <<: *app
+    environment:
+      <<: *env
+      SERVER_ID: API_1
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  api2:
+    <<: *app
+    environment:
+      <<: *env
+      SERVER_ID: API_2
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  worker1:
+    <<: *app
+    command: ["node","server/worker.mjs"]
+    environment:
+      <<: *env
+      WORKER_ID: WORKER_1
+      WORKER_SLOT: 1
+  worker2:
+    <<: *app
+    command: ["node","server/worker.mjs"]
+    environment:
+      <<: *env
+      WORKER_ID: WORKER_2
+      WORKER_SLOT: 2
+  worker3:
+    <<: *app
+    command: ["node","server/worker.mjs"]
+    environment:
+      <<: *env
+      WORKER_ID: WORKER_3
+      WORKER_SLOT: 3
+  worker4:
+    <<: *app
+    command: ["node","server/worker.mjs"]
+    environment:
+      <<: *env
+      WORKER_ID: WORKER_4
+      WORKER_SLOT: 4
+  autoscaler:
+    <<: *app
+    command: ["node","server/autoscaler.mjs"]
+  nginx:
+    image: nginx:1.30-alpine
+    restart: unless-stopped
+    ports:
+      - "8088:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      api1:
+        condition: service_healthy
+      api2:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

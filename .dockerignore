@@ -1,0 +1,6 @@
+node_modules
+tools
+.runtime
+.git
+.env
+*.zip
